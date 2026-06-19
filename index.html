@@ -68,6 +68,29 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
+    javascript
+async function connectRoom() {
+  const password = document.getElementById('room-password').value;
+  if (!password) return alert('Please enter a password');
+  
+  // Hash password locally for a secure, private room name
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const roomName = Array.from(new Uint8Array(hashBuffer))
+    .map(b => b.toString(16).padStart(2, '0')).join('');
+
+  const ydoc = new Y.Doc();
+  const provider = new YWebrtcProvider(roomName, ydoc, { 
+    signaling: ['wss://signaling.yjs.dev'] 
+  });
+  
+  document.getElementById('gatekeeper').style.display = 'none';
+  console.log('Connected securely to room:', roomName);
+}
+
+document.getElementById('connect-btn').addEventListener('click', connectRoom);
   </script>
 </body>
 </html>

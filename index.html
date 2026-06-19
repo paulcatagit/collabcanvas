@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collaborative 3D Canvas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Yjs & WebRTC -->
+  <script src="https://cdn.jsdelivr.net/npm/yjs@13.5.6/dist/yjs.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/y-webrtc@10.2.5/dist/y-webrtc.js"></script>
+  <style>
+    body { margin: 0; overflow: hidden; background-color: #111; color: #eee; }
+    canvas { display: block; }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-neutral-800">
+
+  <!-- Simple UI Overlay -->
+  <div class="absolute top-4 left-4 z-10 flex flex-col gap-3 p-4 bg-neutral-900/90 border border-neutral-800 rounded-lg shadow-xl backdrop-blur">
+    <h1 class="text-sm font-semibold tracking-wider uppercase text-neutral-400">3D Collab Canvas</h1>
+    
+    <!-- Password / Room Gate -->
+    <div id="gate" class="flex flex-col gap-2">
+      <input id="room-pass" type="password" placeholder="Enter Room Password" class="px-3 py-1.5 text-xs bg-neutral-950 border border-neutral-800 rounded focus:outline-none focus:border-neutral-600 text-white">
+      <button id="connect-btn" class="px-3 py-1.5 text-xs font-medium bg-white text-black rounded hover:bg-neutral-200 transition">Connect</button>
+    </div>
+
+    <!-- Active Session Controls (Hidden initially) -->
+    <div id="controls" class="hidden flex flex-col gap-2">
+      <div class="flex gap-2">
+        <button id="export-btn" class="flex-1 px-3 py-1.5 text-xs bg-neutral-800 hover:bg-neutral-700 rounded transition">Export JSON</button>
+        <button id="import-btn" class="flex-1 px-3 py-1.5 text-xs bg-neutral-800 hover:bg-neutral-700 rounded transition">Import JSON</button>
+      </div>
+      <span id="status" class="text-[10px] text-neutral-500 text-center">Status: Offline</span>
+    </div>
+  </div>
+
+  <canvas id="canvas-3d" class="w-full h-full absolute inset-0"></canvas>
+
+  <script>
+    // Placeholder script to verify things load
+    console.log("Libraries loaded:", { 
+      Three: typeof THREE !== 'undefined', 
+      Y: typeof Y !== 'undefined' 
+    });
+  </script>
+</body>
+</html>
